@@ -1,0 +1,68 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+
+# ------------------- Task Functions -------------------
+def task1():
+    numbers = simpledialog.askstring("Task 1", "Enter integers separated by spaces:")
+    if numbers:
+        try:
+            num_list = [int(x) for x in numbers.split()]
+            total_sum = sum(num_list)
+            messagebox.showinfo("Result", f"Sum of all integers: {total_sum}")
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid integers!")
+
+def task2():
+    favorite_books = ("The Hobbit", "1984", "To Kill a Mockingbird", "Pride and Prejudice", "The Great Gatsby")
+    books_str = "\n".join(f"📚 {book}" for book in favorite_books)
+    messagebox.showinfo("My Favorite Books", books_str)
+
+def task3():
+    person = {}
+    person["name"] = simpledialog.askstring("Task 3", "Enter your name:")
+    try:
+        person["age"] = int(simpledialog.askstring("Task 3", "Enter your age:"))
+    except (ValueError, TypeError):
+        messagebox.showerror("Error", "Invalid age entered!")
+        return
+    person["favorite_color"] = simpledialog.askstring("Task 3", "Enter your favorite color:")
+    messagebox.showinfo("Person Information", f"👤 Name: {person['name']}\n🎂 Age: {person['age']}\n🎨 Favorite Color: {person['favorite_color']}")
+
+def task4():
+    try:
+        set1 = set(map(int, simpledialog.askstring("Task 4", "Enter numbers for the first set separated by spaces:").split()))
+        set2 = set(map(int, simpledialog.askstring("Task 4", "Enter numbers for the second set separated by spaces:").split()))
+        common_elements = set1 & set2
+        messagebox.showinfo("Common Elements", f"🔗 {common_elements}")
+    except (ValueError, AttributeError):
+        messagebox.showerror("Error", "Please enter valid integers!")
+
+def task5():
+    words = ["python", "java", "csharp", "ruby", "swift", "go"]
+    odd_length_words = [word for word in words if len(word) % 2 != 0]
+    messagebox.showinfo("Odd Length Words", f"📝 {odd_length_words}")
+
+# ------------------- GUI Setup -------------------
+root = tk.Tk()
+root.title("Python Basics Learning App")
+root.geometry("400x420")
+root.configure(bg="#282c34")
+
+# Title
+title_label = tk.Label(root, text="🐍 Python Basics Menu", font=("Arial", 18, "bold"), fg="white", bg="#282c34")
+title_label.pack(pady=20)
+
+# Button style function
+def create_button(text, color, command):
+    return tk.Button(root, text=text, font=("Arial", 12, "bold"), bg=color, fg="white", width=30, height=2, command=command)
+
+# Buttons
+create_button("1️⃣ Sum of a list of integers", "#61afef", task1).pack(pady=5)
+create_button("2️⃣ Favorite books (tuple)", "#98c379", task2).pack(pady=5)
+create_button("3️⃣ Person info (dictionary)", "#e5c07b", task3).pack(pady=5)
+create_button("4️⃣ Common elements in sets", "#c678dd", task4).pack(pady=5)
+create_button("5️⃣ Words with odd length", "#56b6c2", task5).pack(pady=5)
+create_button("❌ Exit", "#e06c75", root.destroy).pack(pady=15)
+
+# Run app
+root.mainloop()
